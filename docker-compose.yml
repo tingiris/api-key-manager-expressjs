@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  mysql-db:
+    image: mysql:latest
+    volumes:
+      - mysql_db_data_container:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD}'
+      MYSQL_DATABASE: '${DB_NAME}'
+      MYSQL_USER: '${DB_USER_NAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      # MYSQL_HOST: '${DB_HOST}'
+      # MYSQL_ROOT_HOST: ${}
+      # MYSQL_LOG_CONSOLE: 'true'
+    # expose:
+    #   # Opens port on the container
+    #   - '5858'
+    ports:
+      - 5858:3306
+    restart: always
+  
+  app:
+    build: 
+      dockerfile: Dockerfile
+      context: ./server
+    command: npm start
+    links:
+      - mysql-db
+    depends_on:
+      - mysql-db
+    ports:
+      - 3838:3838
+    volumes:
+      - /home/node/app
+      - /home/node/app/node_modules
+
+volumes:
+  mysql_db_data_container:

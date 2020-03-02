@@ -19,7 +19,7 @@ app.use('/', index);
 app.use('/api_key', api_key);
 
 app.listen(port, function server(err) {
-	db.sequelize.sync();
+	// db.sequelize.sync();
 	if (err) {
 		console.log(error);
 		process.exit(1);

@@ -15,8 +15,8 @@ p {
 }
 
 .form-container {
-  display: table;
-  margin: 0 auto;
+  display: block;
+  margin: 10px;
 }
 
 input[type=text] {

@@ -10,10 +10,16 @@
 
 <body>
   <div class="form-container">
-    <h1>Submit Your Email</h1>
+    <h1>Manage Your API Key</h1>
     <form action="/api_key/create" method="POST">
       <input type="email" name="userEmail" required />
-      <button class="button-primary" type="submit" >Submit</button>
+      <button class="button-primary" type="submit" >Create</button>
+    </form>
+  </div>
+  <div class="form-container">
+    <form action="/api_key/delete" method="POST">
+      <input type="email" name="userEmail" required />
+      <button class="button-primary" type="submit" >Delete</button>
     </form>
   </div>
 </body>

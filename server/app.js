@@ -2,6 +2,7 @@ const express = require("express");
 var path = require('path');
 require('dotenv').config();
 
+const db = require('./models');
 const index = require('./routes/index');
 const api_key = require('./routes/api_key');
 
@@ -18,6 +19,7 @@ app.use('/', index);
 app.use('/api_key', api_key);
 
 app.listen(port, function server(err) {
+	db.sequelize.sync();
 	if (err) {
 		console.log(error);
 		process.exit(1);

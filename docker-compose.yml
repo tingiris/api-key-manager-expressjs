@@ -2,29 +2,28 @@ version: '3'
 
 services:
   mysql-db:
-    image: mysql:latest
-    volumes:
-      - mysql_db_data_container:/var/lib/mysql
+    image: mysql:5.7
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD}'
       MYSQL_DATABASE: '${DB_NAME}'
       MYSQL_USER: '${DB_USER_NAME}'
-      MYSQL_PASSWORD: '${DB_PASSWORD}'
-      # MYSQL_HOST: '${DB_HOST}'
-      # MYSQL_ROOT_HOST: ${}
-      # MYSQL_LOG_CONSOLE: 'true'
-    # expose:
-    #   # Opens port on the container
-    #   - '5858'
+      MYSQL_PASSWORD: '${DB_USER_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: '${DB_ROOT_PASSWORD}'
     ports:
-      - 5858:3306
-    restart: always
-  
+      # <Port exposed> : < MySQL Port running inside container>
+      - '3306:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
+      # Where our data will be persisted
+    volumes:
+      - mysql_db_data_container:/var/lib/mysql
+
   app:
     build: 
       dockerfile: Dockerfile
       context: ./server
-    command: npm start
+    command: ["/home/node/app/wait-for-it.sh", "mysql-db:3306", "--", "npm", "start"]
     links:
       - mysql-db
     depends_on:

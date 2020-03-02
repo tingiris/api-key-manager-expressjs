@@ -2,17 +2,19 @@ const express = require("express");
 const uuidAPIKey = require('uuid-apikey');
 
 const db = require('../models');
+const api_user = db.api_user;
 
 const router = express.Router();
 
 router.post('/create', async (req, res) => {
   const key = await uuidAPIKey.create();
-
-  await db.api_user.create({
+  console.log(api_user);
+  
+  await api_user.create({
     email: req.body.userEmail,
     apiKey: key.apiKey
   })
-  .then(function() {
+  .then( () => {
     res.redirect('/get_key');
   });
 });
@@ -20,7 +22,7 @@ router.post('/create', async (req, res) => {
 router.post('/get_key', async (req, res) => { 
   const userEmail = req.body.userEmail;
 
-  db.api_user.findOne({
+  await api_user.findOne({
     where: {
        email: userEmail
     }

@@ -14,6 +14,6 @@ RUN npm install --silent
 COPY --chown=node:node . .
 
 # replace this with application's default port
-EXPOSE 3838
+EXPOSE 8080
 
 CMD [ "npm", "start" ]

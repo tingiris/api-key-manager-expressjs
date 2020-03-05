@@ -7,7 +7,7 @@ const api_key = require('./routes/api_key');
 
 const app = express();
 
-const port = process.env.NODE_PORT || 3838;
+const port = process.env.PORT || 3838;
 
 app.use(express.urlencoded({ extended: false }));
 app.set('view engine', 'ejs');
